@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Expediente</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Expediente</h1>
+    <form method="post">
+        Número: <input type="text" name="numero"><br>
+        Cliente: <input type="text" name="cliente"><br>
+        Materia: <input type="text" name="materia"><br>
+        Estado: <input type="text" name="estado"><br>
+        Fecha: <input type="date" name="fecha"><br>
+        Notas: <textarea name="notas"></textarea><br>
+        <input type="submit" value="Guardar">
+    </form>
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>

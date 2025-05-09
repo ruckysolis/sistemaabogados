@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Expediente</title>
+</head>
+<body>
+    <h1>Editar Expediente</h1>
+    <form method="post">
+        Número: <strong>{{ expediente[0] }}</strong><br>
+        Cliente: <input type="text" name="cliente" value="{{ expediente[1] }}"><br>
+        Materia: <input type="text" name="materia" value="{{ expediente[2] }}"><br>
+        Estado: <input type="text" name="estado" value="{{ expediente[3] }}"><br>
+        Fecha: <input type="date" name="fecha" value="{{ expediente[4] }}"><br>
+        Notas: <textarea name="notas">{{ expediente[5] }}</textarea><br>
+        <input type="submit" value="Guardar cambios">
+    </form>
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>
