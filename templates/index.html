@@ -14,6 +14,20 @@
     <button type="submit">Buscar</button>
 </form>
 
+    <a href="{{ url_for('exportar') }}">
+    <button>Exportar a CSV</button>
+    </a>
+
+<form method="get" action="{{ url_for('index') }}">
+    <label for="estado">Filtrar por estado:</label>
+    <select name="estado" id="estado">
+        <option value="">Todos</option>
+        <option value="Abierto" {% if filtro_estado == "Abierto" %}selected{% endif %}>Abierto</option>
+        <option value="Cerrado" {% if filtro_estado == "Cerrado" %}selected{% endif %}>Cerrado</option>
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
     <table border="1">
         <thead>
             <tr>

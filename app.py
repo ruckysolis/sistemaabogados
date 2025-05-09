@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response
+import io
 import csv
 import os
 import urllib.parse
@@ -11,15 +12,19 @@ if not os.path.exists(ARCHIVO):
         escritor = csv.writer(f)
         escritor.writerow(["Numero", "Cliente", "Materia", "Estado", "Fecha", "Notas"])
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     expedientes = []
+    filtro_estado = request.args.get("estado")
+
     with open(ARCHIVO, mode="r", encoding="utf-8") as f:
         lector = csv.reader(f)
-        next(lector)
+        next(lector)  # Saltar el encabezado
         for fila in lector:
-            expedientes.append(fila)
-    return render_template("index.html", expedientes=expedientes)
+            if not filtro_estado or fila[3].lower() == filtro_estado.lower():
+                expedientes.append(fila)
+
+    return render_template("index.html", expedientes=expedientes, filtro_estado=filtro_estado)
 
 @app.route("/agregar", methods=["GET", "POST"])
 def agregar():
@@ -118,6 +123,28 @@ def buscar():
                 expedientes.append(fila)
 
     return render_template("index.html", expedientes=expedientes, query=query)
+
+# Exportar a CSV
+@app.route("/exportar")
+def exportar():
+    output = io.StringIO()
+    escritor = csv.writer(output)
+    # Escribir encabezado
+    escritor.writerow(["Numero", "Cliente", "Materia", "Estado", "Fecha", "Notas"])
+
+    # Escribir datos de expedientes
+    with open(ARCHIVO, mode="r", encoding="utf-8") as f:
+        lector = csv.reader(f)
+        next(lector)  # Saltar el encabezado
+        for fila in lector:
+            escritor.writerow(fila)
+
+    output.seek(0)
+    return Response(
+        output,
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment;filename=expedientes.csv"}
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

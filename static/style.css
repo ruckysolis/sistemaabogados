@@ -1,10 +1,12 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color: #f4f4f4;
 }
 
 h1 {
     text-align: center;
+    color: #333;
 }
 
 table {
@@ -28,13 +30,27 @@ form {
     margin-bottom: 20px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="date"], textarea, select {
     padding: 8px;
-    width: 200px;
+    margin: 5px;
+    width: 250px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 button {
-    padding: 8px 16px;
-    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+a {
+    text-decoration: none;
 }
